@@ -3,7 +3,6 @@ FROM arm32v7/php:7-apache
 MAINTAINER Yves Mettier <ymettier@free.fr>
 
 ARG version
-ENV RC_SMTP_SERVER 'smtp.server.org'
 ENV RC_DEFAULT_HOST 'localhost'
 ENV RC_SMTP_SERVER 'localhost'
 ENV RC_SMTP_PORT '25'
@@ -45,7 +44,6 @@ RUN apt-get update \
 RUN curl -q -s -L -o /tmp/rc.tar.gz https://github.com/roundcube/roundcubemail/releases/download/${version}/roundcubemail-${version}-complete.tar.gz \
   && tar xzf /tmp/rc.tar.gz -C /var/www/ \
   && (cd /var/www/roundcubemail-${version}; tar cf - . | tar -xf - -C /var/www/html ) \
-  && rm -rf /var/www/html/installer \
   && rm -f /tmp/rc.tar.gz \
   && rm -rf /var/www/roundcubemail-${version}
 
@@ -62,17 +60,18 @@ RUN mv composer.json-dist composer.json \
         johndoh/markasjunk2 \
     && composer clear-cache
 
+RUN chown -Rh www-data:www-data /var/www/html
+
 RUN apt-get clean
 
-COPY etc /etc
-COPY config/config.inc.php config/
+COPY app /app
 
 # Setup logging
 RUN mkdir -p /etc/services.d/logs && echo /var/www/logs/errors >> /etc/services.d/logs/stderr
-
-RUN chown -Rh www-data:www-data /var/www/html
 
 # Keep the db in a volume for persistence
 VOLUME /var/www/db
 
 EXPOSE 80
+
+CMD ["/app/start.sh"]
