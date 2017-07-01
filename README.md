@@ -13,6 +13,11 @@ Roundcube Docker container with these characteristics :
 * * markasjunk2
 * * filters
 
+Source
+------
+
+Get to https://github.com/ymettier/rpi-roundcube in order to build this container.
+
 Usage
 -----
 
