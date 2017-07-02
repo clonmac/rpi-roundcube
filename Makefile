@@ -13,8 +13,10 @@ docker-shell:
 push:
 	docker login
 	docker tag ymettier/rpi-roundcube:$(VERSION) ymettier/rpi-roundcube:latest
+	docker tag ymettier/rpi-roundcube:$(VERSION) ymettier/rpi-roundcube:$(VERSION)-latest
 	docker tag ymettier/rpi-roundcube:$(VERSION) ymettier/rpi-roundcube:$(VERSION)-$(REV)
 	docker push ymettier/rpi-roundcube:$(VERSION)-$(REV)
+	docker push ymettier/rpi-roundcube:$(VERSION)-latest
 	docker push ymettier/rpi-roundcube:latest
 	docker logout
 
