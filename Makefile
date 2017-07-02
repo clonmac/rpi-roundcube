@@ -1,13 +1,22 @@
 VERSION=1.3.0
+REV=$(shell git rev-parse --short HEAD)
 
 build:
-	sudo docker build --build-arg version=$(VERSION) -t ymettier/rpi-roundcube:$(VERSION) .
+	docker build --build-arg version=$(VERSION) -t ymettier/rpi-roundcube:$(VERSION) .
 
 run:
-	sudo docker run -it --rm -p 8080:80 ymettier/rpi-roundcube:$(VERSION)
+	docker run -it --rm -p 8080:80 ymettier/rpi-roundcube:$(VERSION)
 
 docker-shell:
-	sudo docker run -it --rm -p 8080:80 ymettier/rpi-roundcube:$(VERSION) bash
+	docker run -it --rm -p 8080:80 ymettier/rpi-roundcube:$(VERSION) bash
+
+push:
+	docker login
+	docker tag ymettier/rpi-roundcube:$(VERSION) ymettier/rpi-roundcube:latest
+	docker tag ymettier/rpi-roundcube:$(VERSION) ymettier/rpi-roundcube:$(VERSION)-$(REV)
+	docker push ymettier/rpi-roundcube:$(VERSION)-$(REV)
+	docker push ymettier/rpi-roundcube:latest
+	docker logout
 
 clean:
-	sudo docker rmi ymettier/rpi-roundcube:$(VERSION)
+	docker rmi ymettier/rpi-roundcube:$(VERSION)

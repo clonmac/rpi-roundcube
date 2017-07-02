@@ -25,6 +25,7 @@ RUN apt-get update \
   && apt-get -y dist-upgrade \
   && apt-get -y install \
       git \
+      libcurl4-gnutls-dev \
       libfreetype6-dev \
       libjpeg62-turbo-dev \
       libldap2-dev \
@@ -38,6 +39,7 @@ RUN apt-get update \
       zip \
     && docker-php-ext-configure ldap --with-libdir=lib/arm-linux-gnueabihf \
     && docker-php-ext-install ldap \
+    && docker-php-ext-install curl \
     && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
     && docker-php-ext-install gd
 
@@ -56,7 +58,8 @@ RUN mv composer.json-dist composer.json \
     && composer config secure-http false \
     && composer require --update-no-dev \
         roundcube/plugin-installer:dev-master \
-        roundcube/carddav \
+        roundcube/carddav:dev-master \
+        roundcube/filters:dev-master \
         johndoh/markasjunk2 \
     && composer clear-cache
 

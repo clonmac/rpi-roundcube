@@ -14,6 +14,7 @@ chown www-data: logs/errors
 
 # Configure Roundcube
 cat /app/config.inc.php.template.php | /usr/local/bin/php  > /var/www/html/config/config.inc.php
+cat /app/carddav_config.inc.php.template.php | /usr/local/bin/php  > /var/www/html/plugins/carddav/config.inc.php
 chown www-data: /var/www/html/config/config.inc.php
 
 # Update database schema if necessary
