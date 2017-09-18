@@ -65,6 +65,9 @@ RUN mv composer.json-dist composer.json \
 
 RUN chown -Rh www-data:www-data /var/www/html
 
+# Fix for bug in filters plugin (https://github.com/6ec123321/filters/pull/28)
+RUN sed -i -e 's/, RCUBE_INPUT_POST, true/, rcube_utils::INPUT_POST, true/g' /var/www/html/plugins/filters/filters.php
+
 RUN apt-get clean
 
 COPY app /app
