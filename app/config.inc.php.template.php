@@ -26,9 +26,18 @@ $config['db_dsnw'] = 'sqlite:////var/www/db/sqlite.db';
 $config['default_host'] = '<?php p_env("RC_DEFAULT_HOST", "%s") ?>';
 
 $config['smtp_server'] = '<?php p_env("RC_SMTP_SERVER", "localhost") ?>';
-$config['smtp_port'] = <?php p_env("RC_SMTP_PORT", "25") ?>;
+$config['smtp_port'] = <?php p_env("RC_SMTP_PORT", "465") ?>;
 $config['smtp_user'] = '<?php p_env("RC_SMTP_USER", "%u") ?>';
 $config['smtp_pass'] = '<?php p_env("RC_SMTP_PASS", "%p") ?>';
+
+$config['smtp_auth_type'] = 'PLAIN';
+
+$config['smtp_conn_options'] = array(
+  'ssl'         => array(
+     'verify_peer'      => false,
+     'verify_peer_name' => false,
+  ),
+);
 
 $config['support_url'] = '';
 $config['product_name'] = '<?php p_env("RC_PRODUCT_NAME", "Roundcube Webmail") ?>';
