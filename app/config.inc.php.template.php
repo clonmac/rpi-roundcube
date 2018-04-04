@@ -30,7 +30,18 @@ $config['smtp_port'] = <?php p_env("RC_SMTP_PORT", "465") ?>;
 $config['smtp_user'] = '<?php p_env("RC_SMTP_USER", "%u") ?>';
 $config['smtp_pass'] = '<?php p_env("RC_SMTP_PASS", "%p") ?>';
 
+$config['smtp_port'] = 465;
+$config['smtp_user'] = '%u';
+$config['smtp_pass'] = '%p';
+
 $config['smtp_auth_type'] = 'PLAIN';
+
+$config['imap_conn_options'] = array(
+   'ssl'         => array(
+     'verify_peer'  => false,
+     'verify_peer_name' => false,
+    ),
+);
 
 $config['smtp_conn_options'] = array(
   'ssl'         => array(
